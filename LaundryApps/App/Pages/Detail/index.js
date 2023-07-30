@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles';
 import back from '../../Asset/back.png';
 import images from '../../Asset/detail.png';
 import plus from '../../Asset/plus_circle.png';
 import minus from '../../Asset/minus_circle.png';
-import { Image, View, TouchableOpacity, Text } from 'react-native';
+import { Image, View, TouchableOpacity, Text, ToastAndroid } from 'react-native';
 
-const Detail = () => {
+const Detail = ({ navigation }) => {
+    const [quantity, setQuantity] = useState(0);
+
+    const handleIncrease = () => {
+        setQuantity(quantity + 1)
+    }
+
+    const handleDecrease = () => {
+        if (quantity > 0) {
+            setQuantity(quantity - 1)
+        } else {
+            ToastAndroid.show('Jumlah barang tidak boleh kurang dari 0', ToastAndroid.SHORT);
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Image
                 style={styles.images}
                 source={images}
             />
-            <TouchableOpacity style={styles.buttonBack}>
+            <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.goBack()}>
                 <Image
                     style={styles.icon}
                     source={back}
@@ -39,11 +53,15 @@ const Detail = () => {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit diam, lobortis at auctor eu, tempus eget enim. Etiam ullamcorper risus ac diam pulvinar, a auctor nunc sagittis. In euismod est est, ac pretium sem egestas eget. Nunc mollis rutrum nisl lacinia convallis. Curabitur et arcu eros. Proin eu tellus augue. Vestibulum auctor risus erat, et tempor augue
                 </Text>
                 <View style={styles.quantityContainer}>
-                    <Image source={minus} style={styles.iconQuantity} />
+                    <TouchableOpacity onPress={handleDecrease}>
+                        <Image source={minus} style={styles.iconQuantity} />
+                    </TouchableOpacity>
                     <View style={styles.quantity}>
-                        <Text style={styles.quantityText}>0</Text>
+                        <Text style={styles.quantityText}>{quantity}</Text>
                     </View>
-                    <Image source={plus} style={styles.iconQuantity} />
+                    <TouchableOpacity onPress={handleIncrease}>
+                        <Image source={plus} style={styles.iconQuantity} />
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>

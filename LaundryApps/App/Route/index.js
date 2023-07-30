@@ -5,7 +5,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Home from '../Pages/Home/index';
 import Login from '../Pages/Login/index';
 import Detail from '../Pages/Detail/index';
-
+import Product from '../Pages/Product';
+import Summary from '../Pages/Summary';
+import Color from '../Constant/Color';
 
 const Stack = createStackNavigator();
 
@@ -14,18 +16,11 @@ const App = () => {
     return (
         <SafeAreaProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Detail" >
+                <Stack.Navigator initialRouteName="Login" >
                     <Stack.Screen
                         name="Home"
                         component={Home}
-                        options={{
-                            headerLeft: null,
-                            headerTitle: 'Home',
-                            headerStyle: {
-                                backgroundColor: '#D7AF70',
-                            },
-                            headerTintColor: '#FFF'
-                        }}
+                        options={{ headerShown: null }}
                     />
                     <Stack.Screen
                         name="Login"
@@ -33,9 +28,23 @@ const App = () => {
                         options={{ headerShown: null }}
                     />
                     <Stack.Screen
+                        name="Product"
+                        component={Product}
+                        options={{ headerShown: null }}
+                    />
+                    <Stack.Screen
                         name="Detail"
                         component={Detail}
                         options={{ headerShown: null }}
+                    />
+                    <Stack.Screen
+                        name="Summary"
+                        component={Summary}
+                        options={{ 
+                            headerTintColor: Color.Main,
+                            title: 'Order Summary',
+                            headerTitleAlign: 'center'
+                         }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

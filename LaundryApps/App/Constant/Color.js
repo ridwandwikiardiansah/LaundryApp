@@ -7,5 +7,7 @@ export default {
     Aqua: "#CAECFF",
     Grey: "#D9D9D9",
     Aqua2: "#E7F5FD",
-    Secondary: "#797979"
+    Secondary: "#797979",
+    White2: "#F6F7FA",
+
 }
