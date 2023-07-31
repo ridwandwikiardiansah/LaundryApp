@@ -5,6 +5,7 @@ import Input from '../../Component/Input';
 import { View, Text, Image, Button, Alert } from 'react-native';
 import { API } from '../../Util/Api';
 import Endpoint from '../../Util/Endpoint';
+import { isEmpty } from 'lodash';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props) => {
@@ -18,12 +19,12 @@ const Login = (props) => {
             password
         }
         const Login = await API.post(Endpoint.LOGIN, body)
-        if (Login.data.status) {
+        if (Login.data.status && !isEmpty(email) && !isEmpty(password)) {
             await AsyncStorage.setItem('token', Login.data.response)
             Alert.alert(`Halo ${email}, Selamat Datang!`)
             props.navigation.navigate('Home')
         } else if (email === '' || password === '') {
-            Alert.alert('Email atau Password tidak boleh kosong, Silahkan masuk menggunakan akun anda!')
+            Alert.alert('Email atau Password tidak boleh kosong!')
         } else {
             Alert.alert(Login.data.message)
         }
