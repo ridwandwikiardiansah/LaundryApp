@@ -40,11 +40,11 @@ const App = () => {
                     <Stack.Screen
                         name="Summary"
                         component={Summary}
-                        options={{ 
+                        options={{
                             headerTintColor: Color.Main,
                             title: 'Order Summary',
                             headerTitleAlign: 'center'
-                         }}
+                        }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>

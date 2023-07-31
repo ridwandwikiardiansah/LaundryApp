@@ -26,6 +26,16 @@ export default StyleSheet.create({
         minHeight: '100%',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        backgroundColor: Color.White,
         justifyContent: 'space-between',
+    },
+    emptyText: {
+        textAlign: 'center'
+    },
+    imageProduct: {
+        width: '100%',
+        height: 192,
+        alignSelf: 'center',
+        borderRadius: 10
     }
 })

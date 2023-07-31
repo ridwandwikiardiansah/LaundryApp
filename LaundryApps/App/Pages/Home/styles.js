@@ -1,4 +1,4 @@
-import { StyleSheet,Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import Color from "../../Constant/Color";
 const viewPortWidth = Dimensions.get("window").width;
 
@@ -26,8 +26,8 @@ export default StyleSheet.create({
         borderRadius: 10
     },
     avatar: {
-        width: 50,
-        height: 50,
+        width: 40,
+        height: 40,
         borderRadius: 10,
         alignSelf: 'center'
     },
@@ -36,25 +36,29 @@ export default StyleSheet.create({
         height: '100%',
         borderRadius: 10,
         padding: 20,
-        paddingLeft: 35
+        paddingLeft: 30
     },
     menuContainer: {
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
         marginVertical: 10,
-        justifyContent: 'space-between'
+        height: 80,
+        marginTop: 20,
+    },
+    scroll: {
+        maxHeight: 100
     },
     menuCard: {
         backgroundColor: Color.White2,
         flexDirection: 'row',
         padding: 10,
-        width: (viewPortWidth/2) - 30,
+        width: (viewPortWidth / 2) - 20,
+        height: 60,
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'space-between'
+        marginRight: 10,
+        justifyContent: 'space-around'
     },
     orderContainer: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: Color.White2,
@@ -70,7 +74,7 @@ export default StyleSheet.create({
         paddingTop: 10
     },
     username: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '600',
         textAlign: 'left'
     },
@@ -107,10 +111,14 @@ export default StyleSheet.create({
     price: {
         color: Color.Main,
         fontSize: 15,
-        fontWeight: '700'
+        fontWeight: '700',
+        marginBottom: 10
+    },
+    id: {
+        marginTop: -10
     },
     labelOrder: {
-        fontSize: 10
+        fontSize: 10,
     },
     imagesOrder: {
         width: 80,
@@ -140,7 +148,7 @@ export default StyleSheet.create({
     labelType: {
         color: Color.Main,
         fontWeight: '500',
-        fontSize: 17
+        fontSize: 17,
     },
     productLatestBackground: {
         width: (viewPortWidth / 2) - 30,
@@ -154,7 +162,8 @@ export default StyleSheet.create({
     },
     latestContainer: {
         flexDirection: 'row',
-        flexWrap: 'nowrap'
+        flexWrap: 'nowrap',
+        elevation: 10
     },
     latestLabel: {
         fontSize: 15,
@@ -162,7 +171,7 @@ export default StyleSheet.create({
         marginLeft: 5
     },
     latestTitle: {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: '700',
         color: Color.White,
         marginLeft: 5

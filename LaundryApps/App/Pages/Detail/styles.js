@@ -41,11 +41,12 @@ export default StyleSheet.create({
     },
     label: {
         color: Color.Main,
-        fontSize: 32,
-        fontWeight: '600'
+        fontSize: 30,
+        fontWeight: '600',
+        width: '60%'
     },
     price: {
-        fontSize: 36,
+        fontSize: 32,
         color: Color.Secondary,
         fontWeight: '400'
     },
@@ -64,11 +65,13 @@ export default StyleSheet.create({
     },
     type: {
         backgroundColor: Color.Aqua,
-        padding: 8
+        padding: 8,
+        borderRadius: 5
     },
     type2: {
         backgroundColor: Color.Aqua2,
-        padding: 8
+        padding: 8,
+        borderRadius: 5
     },
     stock: {
         color: Color.Red,

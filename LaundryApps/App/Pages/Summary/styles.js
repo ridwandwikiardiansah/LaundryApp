@@ -7,7 +7,7 @@ export default StyleSheet.create({
         backgroundColor: Color.White,
         padding: 20
     },
-    waButton : {
+    waButton: {
         backgroundColor: Color.Green,
         width: '100%',
         flexDirection: 'row',
@@ -50,7 +50,7 @@ export default StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         justifyContent: 'center',
-        padding: 5 
+        padding: 5
     },
     cardBody: {
         minHeight: 300,
@@ -58,14 +58,14 @@ export default StyleSheet.create({
         paddingHorizontal: 10
     },
     cardFooter: {
-       flexDirection: 'row',
-       height: 70,
-       alignItems: 'center',
-       backgroundColor: Color.Main,
-       borderBottomLeftRadius: 10,
-       borderBottomRightRadius: 10,
-       justifyContent: 'space-between',
-       padding: 10 
+        flexDirection: 'row',
+        height: 70,
+        alignItems: 'center',
+        backgroundColor: Color.Main,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        justifyContent: 'space-between',
+        padding: 10
     },
     titleHeader: {
         fontSize: 14,
@@ -112,7 +112,7 @@ export default StyleSheet.create({
     labelText: {
         textAlign: 'right'
     },
-    quantity:{
+    quantity: {
         color: Color.Main
     }
 

@@ -6,9 +6,9 @@ import Color from '../Constant/Color';
 const SearchBox = (props) => {
     return (
         <View style={styles.container}>
-            <Image 
+            <Image
                 style={styles.icon}
-                source={{uri: "https://img.freepik.com/free-icon/search_318-129530.jpg?size=626&ext=jpg"}} 
+                source={{ uri: "https://img.freepik.com/free-icon/search_318-129530.jpg?size=626&ext=jpg" }}
             />
             <TextInput
                 style={styles.input}

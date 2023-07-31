@@ -9,8 +9,7 @@ API.interceptors.request.use(
     async config => {
         const token = await AsyncStorage.getItem('token')
         if (token) {
-            console.log(token)
-            config.headers.Authorization = token
+            config.headers.token = token
         }
         return config
     },

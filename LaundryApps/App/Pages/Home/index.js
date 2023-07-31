@@ -4,7 +4,7 @@ import Header from '../../Component/Header';
 import { View, Text, Image, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import { API } from '../../Util/Api';
 import ENDPOINT from '../../Util/Endpoint';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { map } from 'lodash';
 import detail from '../../Asset/detail.png';
 import LinearGradient from 'react-native-linear-gradient';
 import Color from '../../Constant/Color';
@@ -12,25 +12,32 @@ import note from '../../Asset/note.png';
 
 const Home = ({ navigation }) => {
     const [user, setUser] = useState({})
+    const [category, setCategory] = useState({})
+    const [product, setProduct] = useState({})
 
     const getUser = async () => {
-        const token = await AsyncStorage.getItem('token')
-        console.log(token)
-        const options = {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        }
         const userInfo = await API.get(ENDPOINT.USER)
-        console.log(userInfo)
+        setUser(userInfo.data.response)
+    }
+
+    const getCategory = async () => {
+        const category = await API.get(ENDPOINT.CATEGORY)
+        setCategory(category.data.response)
+    }
+
+    const getProduct = async () => {
+        const product = await API.get(ENDPOINT.PRODUCT)
+        setProduct(product.data.response)
     }
 
     useEffect(() => {
         getUser();
+        getCategory();
+        getProduct();
     }, [])
 
-    const navigateToDetail = () => {
-        navigation.navigate('Detail')
+    const navigateToDetail = (p) => {
+        navigation.navigate('Detail', p)
     }
 
     const navigateToSummary = () => {
@@ -50,7 +57,7 @@ const Home = ({ navigation }) => {
                     <Image style={styles.avatar} source={{ uri: "https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?size=626&ext=jpg" }} />
                     <View>
                         <Text style={styles.greeting}>Good Morning!</Text>
-                        <Text style={styles.username}>John Doe</Text>
+                        <Text style={styles.username}>{user.name}</Text>
                     </View>
                     <View style={styles.saldoContainer}>
                         <Text style={styles.labelSaldo}>
@@ -59,21 +66,30 @@ const Home = ({ navigation }) => {
                         <Text style={styles.saldo}>$ 14 000 000</Text>
                     </View>
                 </View>
-                <View style={styles.menuContainer}>
-                    <View style={styles.menuCard}>
-                        <Image style={styles.avatar} source={detail} />
-                        <Text>Dry Clean</Text>
-                    </View>
-                    <View style={styles.menuCard}>
-                        <Image style={styles.avatar} source={detail} />
-                        <Text>Dry Clean</Text>
-                    </View>
-                </View>
+                <ScrollView
+                    style={styles.scroll}
+                    contentContainerStyle={styles.menuContainer}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}>
+                    {
+                        category ? map(category, (a, i) => (
+                            <View style={styles.menuCard} key={i}>
+                                <Image style={styles.avatar} source={detail} />
+                                <Text>{a.name}</Text>
+                            </View>
+                        )) : (
+                            <View style={styles.menuCard}>
+                                <Image style={styles.avatar} source={detail} />
+                                <Text>Dry Clean</Text>
+                            </View>
+                        )
+                    }
+                </ScrollView>
                 <Text style={styles.labelType}>Latest Order</Text>
                 <TouchableOpacity style={styles.orderContainer} onPress={navigateToSummary}>
                     <Image style={styles.imagesOrder} source={detail} />
                     <View style={styles.textOrderContainer}>
-                        <Text>Order ID: #2134</Text>
+                        <Text style={styles.id}>Order ID: #2134</Text>
                         <View style={styles.order}>
                             <Text style={styles.labelOrder}>Total Order</Text>
                             <Text style={styles.price}>$ 180 00</Text>
@@ -94,19 +110,28 @@ const Home = ({ navigation }) => {
                 </TouchableOpacity>
                 <Text style={styles.labelType}>Our latest product</Text>
                 <View style={styles.latestContainer}>
-                    <TouchableOpacity onPress={navigateToDetail}>
-                        <ImageBackground source={detail} style={styles.productLatestBackground} imageStyle={styles.radius}>
-                            <LinearGradient colors={[Color.Aqua, Color.Main,]} style={styles.blue} />
-                            <Text style={styles.latestTitle}>Jeans</Text>
-                            <Text style={styles.latestLabel}>$ 10.00/pc</Text>
-                        </ImageBackground>
-                    </TouchableOpacity>
-
-                    <ImageBackground source={detail} style={styles.productLatestBackground} imageStyle={styles.radius}>
-                        <LinearGradient colors={[Color.Aqua, Color.Main,]} style={styles.blue} />
-                        <Text style={styles.latestTitle}>Jeans</Text>
-                        <Text style={styles.latestLabel}>$ 10.00/pc</Text>
-                    </ImageBackground>
+                    <ScrollView
+                        showsHorizontalScrollIndicator={false}
+                        horizontal={true}>
+                        {
+                            product ?
+                                map(product, (p, i) => (
+                                    <TouchableOpacity onPress={() => navigateToDetail(p)} key={i}>
+                                        <ImageBackground source={p.image ? { uri: p.image } : detail} style={styles.productLatestBackground} imageStyle={styles.radius}>
+                                            <LinearGradient colors={[Color.Aqua, Color.Main,]} style={styles.blue} />
+                                            <Text style={styles.latestTitle} numberOfLines={1}>{p.name}</Text>
+                                            <Text style={styles.latestLabel}>Rp.{p.price}/pc</Text>
+                                        </ImageBackground>
+                                    </TouchableOpacity>
+                                )) : (
+                                    <ImageBackground source={detail} style={styles.productLatestBackground} imageStyle={styles.radius}>
+                                        <LinearGradient colors={[Color.Aqua, Color.Main,]} style={styles.blue} />
+                                        <Text style={styles.latestTitle} numberOfLines={1}>Nama Product</Text>
+                                        <Text style={styles.latestLabel}>Harga Product</Text>
+                                    </ImageBackground>
+                                )
+                        }
+                    </ScrollView>
                 </View>
             </View>
         </ScrollView>

@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles';
 import back from '../../Asset/back.png';
 import images from '../../Asset/detail.png';
 import plus from '../../Asset/plus_circle.png';
 import minus from '../../Asset/minus_circle.png';
+import { API } from '../../Util/Api';
+import ENDPOINT from '../../Util/Endpoint';
 import { Image, View, TouchableOpacity, Text, ToastAndroid } from 'react-native';
+import { find } from 'lodash';
 
-const Detail = ({ navigation }) => {
+const Detail = (props) => {
     const [quantity, setQuantity] = useState(0);
+    const [category, setCategory] = useState({})
+    const data = props.route.params;
 
     const handleIncrease = () => {
         setQuantity(quantity + 1)
@@ -21,36 +26,46 @@ const Detail = ({ navigation }) => {
         }
     }
 
+    const getCategory = async () => {
+        const category = await API.get(ENDPOINT.CATEGORY)
+        const id = find(category.data.response, (a, i) => { if (a.id == data.category_id) return a })
+        setCategory(id)
+    }
+
+    useEffect(() => {
+        getCategory();
+    }, [])
+
     return (
         <View style={styles.container}>
             <Image
                 style={styles.images}
-                source={images}
+                source={data.image ? { uri: data.image } : images}
             />
-            <TouchableOpacity style={styles.buttonBack} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={styles.buttonBack} onPress={() => props.navigation.goBack()}>
                 <Image
                     style={styles.icon}
                     source={back}
                 />
             </TouchableOpacity>
             <View style={styles.row}>
-                <Text style={styles.label}>Jeans</Text>
-                <Text style={styles.price}>$ 10.00</Text>
+                <Text style={styles.label}>{data.name}</Text>
+                <Text style={styles.price} numberOfLines={1}>Rp.{data.price}</Text>
             </View>
             <View style={styles.rowContent}>
                 <View style={styles.rowContent2}>
                     <View style={styles.type}>
-                        <Text>Dry Clean</Text>
+                        <Text>{category ? category.name : 'category'} </Text>
                     </View>
                     <View style={styles.type2}>
-                        <Text>SWBL</Text>
+                        <Text>{data.sku}</Text>
                     </View>
                 </View>
-                <Text style={styles.stock}>2 Stock left!</Text>
+                <Text style={styles.stock}>{data.stock} Stock left!</Text>
             </View>
             <View style={styles.content}>
                 <Text>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam elit diam, lobortis at auctor eu, tempus eget enim. Etiam ullamcorper risus ac diam pulvinar, a auctor nunc sagittis. In euismod est est, ac pretium sem egestas eget. Nunc mollis rutrum nisl lacinia convallis. Curabitur et arcu eros. Proin eu tellus augue. Vestibulum auctor risus erat, et tempor augue
+                    {data.description}
                 </Text>
                 <View style={styles.quantityContainer}>
                     <TouchableOpacity onPress={handleDecrease}>

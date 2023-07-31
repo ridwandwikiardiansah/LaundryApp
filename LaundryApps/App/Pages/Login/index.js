@@ -8,8 +8,9 @@ import Endpoint from '../../Util/Endpoint';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props) => {
-    const [email, setEmail] = useState('ovickbs@gmail.com')
-    const [password, setPassword] = useState('qwerpilkopi')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [secure, setSecure] = useState(false);
 
     const onPressLogin = async () => {
         const body = {
@@ -17,7 +18,6 @@ const Login = (props) => {
             password
         }
         const Login = await API.post(Endpoint.LOGIN, body)
-        console.log(Login, 'log')
         if (Login.data.status) {
             await AsyncStorage.setItem('token', Login.data.response)
             Alert.alert(`Halo ${email}, Selamat Datang!`)
@@ -36,8 +36,19 @@ const Login = (props) => {
             <Text style={styles.titleText2}>Sign in to Your Account</Text>
             <Text style={styles.titleText3}>To enter our app, you must sign in first</Text>
             <View style={styles.card}>
-                <Input label="Email" placeholder="Masukkan Email" handleChange={(e) => setEmail(e)} />
-                <Input label="Password" placeholder="Masukkan Password" handleChange={(e) => setPassword(e)} />
+                <Input
+                    label="Email"
+                    placeholder="Masukkan Email"
+                    handleChange={(e) => setEmail(e)}
+                />
+                <Input
+                    label="Password"
+                    placeholder="Masukkan Password"
+                    handleChange={(e) => setPassword(e)}
+                    secure={!secure}
+                    type={'password'}
+                    unSecure={() => setSecure(!secure)}
+                />
                 <Button title="Sign in" onPress={onPressLogin} />
             </View>
 

@@ -1,10 +1,16 @@
 import React from 'react';
 import styles from './styles';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
 import chat from '../../Asset/chat.png';
 import detail from '../../Asset/detail.png';
 
 const Summary = () => {
+
+    const openWhatsApp = () => {
+        Linking.openURL('whatsapp://send?text=hello, can i talk with u ?&phone=081399977965')
+    }
+
+
     return (
         <View style={styles.container}>
             <View style={styles.card}>
@@ -20,7 +26,7 @@ const Summary = () => {
                         <Text style={styles.address}>123 Pasir Ris, 13810, Singapore</Text>
                     </View>
                     <View style={styles.cardItem}>
-                        <Image style={styles.images} source={detail}  />
+                        <Image style={styles.images} source={detail} />
                         <View style={styles.listProduct}>
                             <Text style={styles.labelProduct}>Dry Cleaning</Text>
                             <Text style={styles.quantity}>qty: 1</Text>
@@ -36,10 +42,10 @@ const Summary = () => {
                     <Text style={styles.titleFooter}>$ 10.00</Text>
                 </View>
             </View>
-            <View style={styles.waButton}>
+            <TouchableOpacity onPress={openWhatsApp} style={styles.waButton}>
                 <Image source={chat} style={styles.icon} />
                 <Text style={styles.titleButton}>WHATSAPP US</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.invoiceButton}>
                 <Text style={styles.titleInvoice}>Download Invoice</Text>
             </View>
